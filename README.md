@@ -269,6 +269,22 @@ Unlike `freeze`, this method allows sandboxed script to add/modify/delete proper
 
 **IMPORTANT:** It is not possible to protect objects that has already been proxied to the VM.
 
+## Pausing and resuming VM timeouts and intervals
+
+You can pause and resume all timers of VM by calling methods like
+
+```javascript
+const {NodeVM} = require('vm2');
+const vm = new NodeVM();
+
+vm.run('setTimeout(function() {console.log("hello");}, 1000);');
+vm.pauseTimers();
+...
+vm.resumeTimers();
+```
+
+You VM code can use setTimeout, clearTimeout, setInterval, clearInterval during pause. New timers will start on resume.
+
 ## Cross-sandbox relationships
 
 ```javascript
